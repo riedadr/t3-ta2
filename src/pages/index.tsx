@@ -5,7 +5,8 @@ import Link from "next/link";
 import { api } from "~/utils/api";
 
 const Home: NextPage = () => {
-  const hello = api.example.hello.useQuery({ text: "from tRPC" });
+  const hello = api.db.hello.useQuery({ text: "from tRPC" });
+  const fächer = api.db.kw.useQuery({ gruppe: 40, kw: 9 });
 
   return (
     <>
@@ -45,6 +46,9 @@ const Home: NextPage = () => {
           </div>
           <p className="text-2xl text-white">
             {hello.data ? hello.data.greeting : "Loading tRPC query..."}
+          </p>
+          <p className="text-2xl text-white">
+            {fächer.data ? fächer.data.result.length : "Loading tRPC query..."}
           </p>
         </div>
       </main>

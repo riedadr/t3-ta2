@@ -6,6 +6,10 @@ import { z } from "zod";
  */
 const server = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]),
+  MYSQL_URL: z.string(),
+  MYSQL_USER: z.string(),
+  MYSQL_PASS: z.string(),
+  MYSQL_DB: z.string(),
 });
 
 /**
@@ -24,6 +28,10 @@ const client = z.object({
  */
 const processEnv = {
   NODE_ENV: process.env.NODE_ENV,
+  MYSQL_URL: process.env.MYSQL_URL,
+  MYSQL_USER: process.env.MYSQL_USER,
+  MYSQL_PASS: process.env.MYSQL_PASS,
+  MYSQL_DB: process.env.MYSQL_DB,
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
 };
 
