@@ -5,13 +5,24 @@ import { env } from "../../../env.mjs";
 
 console.log("API Test2");
 
-type Tfach = {
+export type Tfach = {
   fid: number;
   name: string;
   ilias: string;
   dozent: string;
   gruppe: string;
 };
+
+export type Tgruppe = {
+  stdid: number;
+  kw: number;
+  tag: "mo" | "di" | "mi" | "do" | "fr";
+  stunde: number;
+  fach: number;
+  raum: string;
+};
+
+export type Tstunde = Tgruppe & Tfach;
 
 const connection = mysql.createConnection({
   host: env.MYSQL_URL,
@@ -37,7 +48,7 @@ export const dbRouter = createTRPCRouter({
           : `SELECT * FROM fach`;
       try {
         const [rows] = await (await connection).execute(query);
-        return { result: rows as Tfach[] };
+        return { result: rows as Tfach[], error: false };
       } catch (error) {
         console.error("❌", (error as Error).message);
         return { result: [] as Tfach[], error };
@@ -46,13 +57,13 @@ export const dbRouter = createTRPCRouter({
   kw: publicProcedure
     .input(z.object({ kw: z.number(), gruppe: z.number() }))
     .query(async ({ input }) => {
-      const query = `SELECT * FROM gruppe${input.gruppe} WHERE kw=${input.kw} GROUP BY tag ORDER BY stunde`;
+      const query = `SELECT * FROM gruppe${input.gruppe} AS g JOIN fach ON g.fach=fach.fid WHERE kw=${input.kw} ORDER BY tag,stunde`;
       try {
         const [rows] = await (await connection).execute(query);
-        return { result: rows as Tfach[] };
+        return { result: rows as Tstunde[], error: false };
       } catch (error) {
         console.error("❌", (error as Error).message);
-        return { result: [] as Tfach[], error };
+        return { result: [] as Tstunde[], error };
       }
     }),
 });
