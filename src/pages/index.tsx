@@ -14,7 +14,7 @@ const Home: NextPage = () => {
   function getWeekNo() {
     const today = new Date();
     const year = new Date(today.getFullYear(), 0, 1);
-    const days = Math.floor((today - year) / (24 * 60 * 60 * 1000));
+    const days = Math.floor((today.valueOf() - year.valueOf()) / (24 * 60 * 60 * 1000));
     const week = Math.ceil((today.getDay() + 1 + days) / 7);
     return week;
   }
