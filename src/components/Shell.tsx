@@ -31,7 +31,7 @@ export default function Shell({ children }: { children: ReactNode }) {
           hidden={!opened}
           width={{ sm: 200, lg: 300 }}
         >
-          <Text>Application navbar</Text>
+          <Text>Wechsel zw Timeline und Tabelle</Text>
         </Navbar>
       }
       header={
@@ -49,7 +49,7 @@ export default function Shell({ children }: { children: ReactNode }) {
               />
             </MediaQuery>
 
-            <Text>Application header</Text>
+            <Text>Stundenplan TA2</Text>
           </div>
         </Header>
       }

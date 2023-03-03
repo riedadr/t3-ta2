@@ -1,12 +1,30 @@
+import { useState, useEffect } from "react";
 import { type NextPage } from "next";
 import Head from "next/head";
 import { FächerTimeLine } from "~/components/fächer/FächerTimeline";
 
+
 import { api } from "~/utils/api";
+import { type Tstunde } from "~/server/api/routers/db";
 
 const Home: NextPage = () => {
-  const fächer = api.db.kw.useQuery({ gruppe: 40, kw: 10 });
-  
+  const [weekNo, setWeekNo] = useState(getWeekNo());
+	const [weekData, setWeekData] = useState<Tstunde[]>()
+
+  function getWeekNo() {
+    const today = new Date();
+    const year = new Date(today.getFullYear(), 0, 1);
+    const days = Math.floor((today - year) / (24 * 60 * 60 * 1000));
+    const week = Math.ceil((today.getDay() + 1 + days) / 7);
+    return week;
+  }
+
+  const woche = api.db.kw.useQuery({ gruppe: 40, kw: weekNo });
+	useEffect(() => {
+		const w = woche.data?.result
+		setWeekData(w)
+	}, [woche])
+	
 
   return (
     <>
@@ -16,12 +34,18 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h1>Stunden</h1>
-          {fächer.data ? <FächerTimeLine data={fächer.data.result} /> : <p>Loading tRPC query...</p>}
+        <h1>
+          Woche {weekNo - 8} (kw{weekNo})
+        </h1>
+        {woche.error ? woche.error.message : ""}
+        {weekData ? (
+          <FächerTimeLine data={weekData} currentWeek={weekNo == getWeekNo()} />
+        ) : (
+          <p>Loading tRPC query...</p>
+        )}
       </main>
     </>
   );
-
 };
 
 export default Home;
