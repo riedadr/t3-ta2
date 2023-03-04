@@ -1,97 +1,102 @@
 import { useState, useEffect } from "react";
 import type { Tstunde } from "~/server/api/routers/db";
 import { Button, Timeline, Text } from "@mantine/core";
+import { api } from "~/utils/api";
 
 export function FächerTimeLine({
-  data,
+  group,
   currentWeek,
 }: {
-  data: Tstunde[];
-  currentWeek: boolean;
+  group: number;
+  currentWeek: number;
 }) {
   const [day, setDay] = useState(new Map<number, Tstunde | null>());
-  const [weekDay, setWeekDay] = useState(getWeekDay());
+  const [currentDay] = useState(getCurrentDay());
+  const [selectedDay, setSelectedDay] = useState(
+    getCurrentDay() === ("sa" || "so") ? "mo" : getCurrentDay()
+  );
   const [currentLesson, setCurrentLesson] = useState(-1);
+  const woche = api.db.kw.useQuery({ gruppe: group, kw: currentWeek });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const data = woche.data?.result || [];
 
-  function getWeekDay() {
-    const weekDays = ["so", "mo", "di", "mi", "do", "fr", "sa"];
+  function getCurrentDay() {
+    const daysOfWeek = ["so", "mo", "di", "mi", "do", "fr", "sa"];
     const today = new Date();
+    const dayNo = today.getDay();
 
-    let dayNo = today.getDay();
-    if (dayNo == 0 || dayNo == 6) dayNo = 1; // show monday on weekend
-
-    return weekDays.at(dayNo) || "mo";
+    return daysOfWeek.at(dayNo) || "mo";
   }
 
-  function setDayList(selectedDay: string) {
-    const stundenMap = new Map<number, Tstunde | null>();
-    data.forEach((stunde) => {
-      if (stunde.tag === selectedDay) {
-        while (stundenMap.size < stunde.stunde)
-          stundenMap.set(stundenMap.size + 1, null);
-        stundenMap.set(stunde.stunde, stunde);
-      }
-    });
-    setDay(stundenMap);
+  function markProgress() {
+    const today = new Date();
+    const h = today.getHours();
+    const m = today.getMinutes();
+    const progress = (h - 8) * 60 + m;
+
+    let curr = -1;
+    if (progress > 0) curr = 1; //0800
+    if (progress > 45) curr = 2; //0845
+    if (progress > 120) curr = 3; //1000
+    if (progress > 165) curr = 4; //1045
+    if (progress > 240) curr = 5; //1200
+    if (progress > 285) curr = 6; //1245
+    if (progress > 330) curr = 7; //1330
+    if (progress > 390) curr = 8; //1430
+    if (progress > 435) curr = 9; //1515
+    setCurrentLesson(curr);
   }
 
   useEffect(() => {
-    setDayList(weekDay);
-		console.log("list updated");
-		
-    if (weekDay === getWeekDay() && currentWeek) {
-      const today = new Date();
-      const h = today.getHours();
-      const m = today.getMinutes();
-      const progress = (h - 8) * 60 + m;
+    function getDayList() {
+      const stundenMap = new Map<number, Tstunde | null>();
+      data.forEach((stunde) => {
+        if (stunde.tag === selectedDay) {
+          while (stundenMap.size < stunde.stunde)
+            stundenMap.set(stundenMap.size + 1, null);
+          stundenMap.set(stunde.stunde, stunde);
+        }
+      });
+      return stundenMap;
+    }
 
-      let curr = -1;
-      if (progress > 0) curr = 1; //0800
-      if (progress > 45) curr = 2; //0845
-      if (progress > 120) curr = 3; //1000
-      if (progress > 165) curr = 4; //1045
-      if (progress > 240) curr = 5; //1200
-      if (progress > 285) curr = 6; //1245
-      if (progress > 330) curr = 7; //1330
-      if (progress > 390) curr = 8; //1430
-      if (progress > 435) curr = 9; //1515
-      setCurrentLesson(curr);
-    } else setCurrentLesson(-1);
-		
-  }, [weekDay, currentWeek]);
+    setDay(getDayList());
+    if (selectedDay === currentDay) markProgress();
+  }, [selectedDay, currentDay, data]);
 
   return (
     <>
-      <div className="mb-12 flex gap-2">
+    <h1>Woche {currentWeek - 8} (KW {currentWeek})</h1>
+      <div className="mb-12 mt-2 flex gap-2">
         <Button
-          variant={weekDay === "mo" ? "filled" : "default"}
-          onClick={() => setWeekDay("mo")}
+          variant={selectedDay === "mo" ? "filled" : "default"}
+          onClick={() => setSelectedDay("mo")}
         >
-          Montag
+          Mo
         </Button>
         <Button
-          variant={weekDay === "di" ? "filled" : "default"}
-          onClick={() => setWeekDay("di")}
+          variant={selectedDay === "di" ? "filled" : "default"}
+          onClick={() => setSelectedDay("di")}
         >
-          Dienstag
+          Di
         </Button>
         <Button
-          variant={weekDay === "mi" ? "filled" : "default"}
-          onClick={() => setWeekDay("mi")}
+          variant={selectedDay === "mi" ? "filled" : "default"}
+          onClick={() => setSelectedDay("mi")}
         >
-          Mittwoch
+          Mi
         </Button>
         <Button
-          variant={weekDay === "do" ? "filled" : "default"}
-          onClick={() => setWeekDay("do")}
+          variant={selectedDay === "do" ? "filled" : "default"}
+          onClick={() => setSelectedDay("do")}
         >
-          Donnerstag
+          Do
         </Button>
         <Button
-          variant={weekDay === "fr" ? "filled" : "default"}
-          onClick={() => setWeekDay("fr")}
+          variant={selectedDay === "fr" ? "filled" : "default"}
+          onClick={() => setSelectedDay("fr")}
         >
-          Freitag
+          Fr
         </Button>
       </div>
       <section>

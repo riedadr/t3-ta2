@@ -1,0 +1,32 @@
+i have a mysql table with the columns kw, tag, stunde and fach. i want all rows of that table to be returned in a nested json.
+
+the query SELECT * FROM gruppe40 returns the data as array:
+
+[
+{kw: 10, tag: "mo", stunde: 1, fach: "Mathe"},
+{kw: 10, tag: "mo", stunde: 2, fach: "Mathe"},
+{kw: 10, tag: "mo", stunde: 3, fach: "Englisch"},
+{kw: 10, tag: "mo", stunde: 4, fach: "Englisch"},
+{kw: 10, tag: "di", stunde: 5, fach: "Deutsch"},
+{kw: 10, tag: "di", stunde: 6, fach: "Deutsch"},
+{kw: 11, tag: "mo", stunde: 1, fach: "Info"},
+{kw: 11, tag: "mo", stunde: 2, fach: "Info"},
+{kw: 11, tag: "di", stunde: 3, fach: "Kunst"},
+{kw: 11, tag: "di", stunde: 4, fach: "Kunst"},
+{kw: 11, tag: "fr", stunde: 3, fach: "Geo"},
+{kw: 11, tag: "fr", stunde: 4, fach: "Geo"},
+]
+
+but i want to know a query which returns the data in a single json like:
+
+{
+  10: {
+    mo: {1: {fach: "Mathe"}, 2: {fach: "Mathe"}, 3: {fach: "Englisch"}, 4: {fach: "Englisch"}},
+    di: {5: {fach: "Deutsch"}, 6: {fach: "Deutsch"}}
+  },
+  11: {
+    mo: {1: {fach: "Info"}, 2: {fach: "Info"}},
+    di: {3: {fach: "Kunst"}, 4: {fach: "Kunst"}},
+    fr: {3: {fach: "Geo"}, 4: {fach: "Geo"}}
+  }
+}
