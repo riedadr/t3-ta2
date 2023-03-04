@@ -24,12 +24,7 @@ export type Tgruppe = {
 
 export type Tstunde = Tgruppe & Tfach;
 
-const connection = mysql.createConnection({
-  host: env.MYSQL_URL,
-  user: env.MYSQL_USER,
-  password: env.MYSQL_PASS,
-  database: env.MYSQL_DB,
-});
+const connection = mysql.createConnection(env.DATABASE_URL)
 
 export const dbRouter = createTRPCRouter({
   hello: publicProcedure
@@ -66,4 +61,16 @@ export const dbRouter = createTRPCRouter({
         return { result: [] as Tstunde[], error };
       }
     }),
+  kwPS: publicProcedure
+  .input(z.object({ kw: z.number(), gruppe: z.number() }))
+  .query(async ({ input }) => {
+    const query = `SELECT * FROM gruppe${input.gruppe} AS g JOIN fach ON g.fach=fach.fid WHERE kw=${input.kw} ORDER BY tag,stunde`;
+    try {
+      const [rows] = await (await connection).execute(query);
+      return { result: rows as Tstunde[], error: false };
+    } catch (error) {
+      console.error("❌", (error as Error).message);
+      return { result: [] as Tstunde[], error };
+    }
+  })
 });
