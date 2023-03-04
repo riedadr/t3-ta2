@@ -7,7 +7,10 @@ import {
   MediaQuery,
   Burger,
   useMantineTheme,
+  NavLink,
 } from "@mantine/core";
+import { IconTable, IconTimeline } from "@tabler/icons-react";
+import Link from "next/link";
 
 export default function Shell({ children }: { children: ReactNode }) {
   const theme = useMantineTheme();
@@ -31,7 +34,18 @@ export default function Shell({ children }: { children: ReactNode }) {
           hidden={!opened}
           width={{ sm: 200, lg: 300 }}
         >
-          <Text>Wechsel zw Timeline und Tabelle</Text>
+          <Link href="/">
+            <NavLink label="Timeline" icon={<IconTimeline />} />
+          </Link>
+          <Link href="/plan/40">
+            <NavLink label="Gruppe 40" icon={<IconTable />} />
+          </Link>
+          <Link href="/plan/41">
+            <NavLink label="Gruppe 41" icon={<IconTable />} />
+          </Link>
+          <Link href="/plan/42">
+            <NavLink label="Gruppe 42" icon={<IconTable />} />
+          </Link>
         </Navbar>
       }
       header={
