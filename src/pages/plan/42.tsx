@@ -13,7 +13,8 @@ export async function getStaticProps() {
     ctx: {},
   });
 
-  const res = await ssg.gr.fetch({ gruppe: group });
+  let res = await ssg.gr.fetch({ gruppe: group });
+  if (!res) res = { result: [], error: new Error("Datenbank nicht erreichbar")}
 
   return {
     props: {
@@ -23,7 +24,7 @@ export async function getStaticProps() {
   };
 }
 
-export default function gr42(
+export default function gr40(
   props: InferGetStaticPropsType<typeof getStaticProps>
 ) {
   const { data } = props;
