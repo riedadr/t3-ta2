@@ -27,7 +27,7 @@ export default function Stundenplan({ wocheData, kw }: { wocheData?: TgrWoche, k
       <thead>
 		<tr><th className="text-xl pt-8" colSpan={6}>Woche {kw}</th></tr>
         <tr>
-          <th>Stunde</th>
+          <th>Zeit</th>
           <th>Montag</th>
           <th>Dienstag</th>
           <th>Mittwoch</th>
