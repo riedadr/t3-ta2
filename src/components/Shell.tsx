@@ -8,7 +8,6 @@ import {
   Burger,
   useMantineTheme,
   NavLink,
-  Button,
 } from "@mantine/core";
 import { IconTable, IconTimeline } from "@tabler/icons-react";
 import Link from "next/link";
@@ -27,7 +26,6 @@ export default function Shell({ children }: { children: ReactNode }) {
         },
       }}
       navbarOffsetBreakpoint="sm"
-      asideOffsetBreakpoint="sm"
       navbar={
         <Navbar
           p="md"
@@ -36,24 +34,21 @@ export default function Shell({ children }: { children: ReactNode }) {
           width={{ sm: 200, lg: 300 }}
         >
           <Link href="/">
-            <NavLink label="Timeline" icon={<IconTimeline />} />
+            <NavLink onClick={() => setOpened((o) => !o)} label="Timeline" icon={<IconTimeline />} />
           </Link>
           <Link href="/plan/40">
-            <NavLink label="Gruppe 40" icon={<IconTable />} />
+            <NavLink onClick={() => setOpened((o) => !o)} label="Gruppe 40" icon={<IconTable />} />
           </Link>
           <Link href="/plan/41">
-            <NavLink label="Gruppe 41" icon={<IconTable />} />
+            <NavLink onClick={() => setOpened((o) => !o)} label="Gruppe 41" icon={<IconTable />} />
           </Link>
           <Link href="/plan/42">
-            <NavLink label="Gruppe 42" icon={<IconTable />} />
+            <NavLink onClick={() => setOpened((o) => !o)} label="Gruppe 42" icon={<IconTable />} />
           </Link>
-          <Button color="red" variant="outline" onClick={() => localStorage.removeItem("gruppe")}>
-            Gruppe zurücksetzten (experimentell)
-          </Button>
         </Navbar>
       }
       header={
-        <Header height={{ base: 50, md: 70 }} p="md">
+        <Header height={70} p="md">
           <div
             style={{ display: "flex", alignItems: "center", height: "100%" }}
           >
