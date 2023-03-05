@@ -6,19 +6,19 @@ export default function Stundenplan({ wocheData, kw }: { wocheData?: TgrWoche, k
     <tr key={std}>
       <td>{std}</td>
       <td>
-        {(wocheData?.mo && wocheData?.mo[std as TstdNrs]?.fach) || <Text fs="italic" color="dimmed">frei</Text>}
+        {(wocheData?.mo && wocheData?.mo[std as TstdNrs]?.kurz) || <Text fs="italic" color="dimmed">frei</Text>}
       </td>
       <td>
-        {(wocheData?.di && wocheData?.di[std as TstdNrs]?.fach) || <Text fs="italic" color="dimmed">frei</Text>}
+        {(wocheData?.di && wocheData?.di[std as TstdNrs]?.kurz) || <Text fs="italic" color="dimmed">frei</Text>}
       </td>
       <td>
-        {(wocheData?.mi && wocheData?.mi[std as TstdNrs]?.fach) || <Text fs="italic" color="dimmed">frei</Text>}
+        {(wocheData?.mi && wocheData?.mi[std as TstdNrs]?.kurz) || <Text fs="italic" color="dimmed">frei</Text>}
       </td>
       <td>
-        {(wocheData?.do && wocheData?.do[std as TstdNrs]?.fach) || <Text fs="italic" color="dimmed">frei</Text>}
+        {(wocheData?.do && wocheData?.do[std as TstdNrs]?.kurz) || <Text fs="italic" color="dimmed">frei</Text>}
       </td>
       <td>
-        {(wocheData?.fr && wocheData?.fr[std as TstdNrs]?.fach) || <Text fs="italic" color="dimmed">frei</Text>}
+        {(wocheData?.fr && wocheData?.fr[std as TstdNrs]?.kurz) || <Text fs="italic" color="dimmed">frei</Text>}
       </td>
     </tr>
   ));

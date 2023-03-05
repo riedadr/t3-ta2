@@ -29,6 +29,7 @@ export type Tstunde = Tgruppe & Tfach;
 
 export type TgrStunde = {
   fach: string;
+  kurz: string;
   dozent: string;
   ilias: string;
   raum: string;
@@ -130,7 +131,7 @@ export const dbRouter = createTRPCRouter({
           SELECT 
             kw, 
             tag, 
-            JSON_OBJECTAGG(stunde, JSON_OBJECT('fach', fach.name, "dozent", fach.dozent, "ilias", fach.ilias, "raum", raum)) as stunden 
+            JSON_OBJECTAGG(stunde, JSON_OBJECT('fach', fach.name, 'kurz', fach.kurz, "dozent", fach.dozent, "ilias", fach.ilias, "raum", raum)) as stunden 
           FROM 
             gruppe${input.gruppe} JOIN fach ON gruppe${input.gruppe}.fach=fach.fid
           GROUP BY 
