@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import type { Tstunde } from "~/server/api/routers/db";
+import { type Tstunde } from "~/types/db";
 import { Button, Timeline, Text } from "@mantine/core";
 import { api } from "~/utils/api";
 

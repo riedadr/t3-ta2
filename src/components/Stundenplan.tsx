@@ -3,7 +3,7 @@ import {
     type TstdNrs,
     type TgrWoche,
     type TgrStunde,
-} from "~/server/api/routers/db";
+} from "~/types/db";
 import { type Dispatch, type SetStateAction, useState } from "react";
 import Link from "next/link";
 

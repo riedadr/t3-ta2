@@ -1,7 +1,8 @@
 import React from "react";
 import { type InferGetStaticPropsType } from "next";
 import { createProxySSGHelpers } from "@trpc/react-query/ssg";
-import { dbRouter, type TkwNrs } from "~/server/api/routers/db";
+import { dbRouter } from "~/server/api/routers/db";
+import { type TkwNrs } from "~/types/db";
 import Stundenplan from "~/components/Stundenplan";
 import { Table } from "@mantine/core";
 
@@ -13,8 +14,7 @@ export async function getStaticProps() {
     ctx: {},
   });
 
-  let res = await ssg.gr.fetch({ gruppe: group });
-  if (!res) res = { result: [], error: new Error("Datenbank nicht erreichbar")}
+  const res = await ssg.gr.fetch({ gruppe: group });
 
   return {
     props: {

@@ -1,8 +1,8 @@
-import { useState, useEffect, type SetStateAction, type Dispatch } from "react";
+import { useState, useEffect } from "react";
 import { type NextPage } from "next";
 import Head from "next/head";
 import { FächerTimeLine } from "~/components/Timeline";
-import { Button, Select } from "@mantine/core";
+import { Select } from "@mantine/core";
 
 const Home: NextPage = () => {
     const [selectedGroup, setSelectedGroup] = useState<number>(40);
@@ -60,27 +60,5 @@ const Home: NextPage = () => {
         </>
     );
 };
-
-function GroupSelection({
-    setGroup,
-}: {
-    setGroup: Dispatch<SetStateAction<number>>;
-}) {
-    const selectGroup = (groupNo: number) => {
-        if (window) window.localStorage.setItem("gruppe", groupNo.toString());
-        setGroup(groupNo);
-    };
-
-    return (
-        <div>
-            <h1>Bitte wähle eine Gruppe:</h1>
-            <div>
-                <Button onClick={() => selectGroup(40)}>20/40</Button>
-                <Button onClick={() => selectGroup(41)}>20/41</Button>
-                <Button onClick={() => selectGroup(42)}>20/42</Button>
-            </div>
-        </div>
-    );
-}
 
 export default Home;
