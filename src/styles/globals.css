@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+table {
+	max-width: 100vw !important;
+	max-height: 100vh;
+	overflow: scroll !important;
+}

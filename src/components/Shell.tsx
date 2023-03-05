@@ -8,6 +8,7 @@ import {
   Burger,
   useMantineTheme,
   NavLink,
+  Button,
 } from "@mantine/core";
 import { IconTable, IconTimeline } from "@tabler/icons-react";
 import Link from "next/link";
@@ -46,6 +47,9 @@ export default function Shell({ children }: { children: ReactNode }) {
           <Link href="/plan/42">
             <NavLink label="Gruppe 42" icon={<IconTable />} />
           </Link>
+          <Button color="red" variant="outline" onClick={() => localStorage.removeItem("gruppe")}>
+            Gruppe zurücksetzten (experimentell)
+          </Button>
         </Navbar>
       }
       header={

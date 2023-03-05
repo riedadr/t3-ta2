@@ -8,6 +8,7 @@ console.log("API Test2");
 export type Tfach = {
   fid: number;
   name: string;
+  kurz: string;
   ilias: string;
   dozent: string;
   gruppe: string;
