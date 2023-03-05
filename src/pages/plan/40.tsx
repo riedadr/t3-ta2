@@ -13,8 +13,7 @@ export async function getStaticProps() {
     ctx: {},
   });
 
-  let res = await ssg.gr.fetch({ gruppe: group });
-  if (!res) res = { result: [], error: new Error("Datenbank nicht erreichbar")}
+  const res = await ssg.gr.fetch({ gruppe: group });
 
   return {
     props: {

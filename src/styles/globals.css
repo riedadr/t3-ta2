@@ -3,7 +3,11 @@
 @tailwind utilities;
 
 table {
-	max-width: 100vw !important;
-	max-height: 100vh;
+	/*
+	table-layout: auto !important;
+	width: 90vw !important;
+	*/
+	max-width: 90vw !important;
 	overflow: scroll !important;
 }
+
