@@ -33,15 +33,16 @@ export function FächerTimeLine({
         const progress = (h - 8) * 60 + m;
 
         let curr = -1;
-        if (progress > 0) curr = 1; //0800
-        if (progress > 45) curr = 2; //0845
-        if (progress > 120) curr = 3; //1000
-        if (progress > 165) curr = 4; //1045
-        if (progress > 240) curr = 5; //1200
-        if (progress > 285) curr = 6; //1245
-        if (progress > 330) curr = 7; //1330
-        if (progress > 390) curr = 8; //1430
-        if (progress > 435) curr = 9; //1515
+        if (progress > 0) curr = 0; //0800
+        if (progress > 45) curr = 1; //0845
+        if (progress > 120) curr = 2; //1000
+        if (progress > 165) curr = 3; //1045
+        if (progress > 240) curr = 4; //1200
+        if (progress > 285) curr = 5; //1245
+        if (progress > 330) curr = 6; //1330
+        if (progress > 390) curr = 7; //1430
+        if (progress > 435) curr = 8; //1515
+        if (progress > 480) curr = 9; //1600
         setCurrentLesson(curr);
     }
 
