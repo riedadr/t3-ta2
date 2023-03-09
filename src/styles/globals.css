@@ -11,3 +11,6 @@ table {
 	overflow: scroll !important;
 }
 
+main {
+	padding-right: 1rem !important;
+}

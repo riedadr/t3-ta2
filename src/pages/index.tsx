@@ -13,7 +13,7 @@ const Home: NextPage = () => {
         const days = Math.floor(
             (today.valueOf() - year.valueOf()) / (24 * 60 * 60 * 1000)
         );
-        const week = Math.ceil((today.getDay() - 1 + days) / 7);       
+        const week = Math.ceil((today.getDay() - 1 + days) / 7);
         return week;
     }
 
@@ -42,9 +42,8 @@ const Home: NextPage = () => {
                     </h1>
                     <Select
                         className="w-36"
-                        value={selectGroup.toString()}
+                        value={selectedGroup.toString()}
                         onChange={selectGroup}
-                        placeholder={`Gruppe 20/${selectedGroup}`}
                         data={[
                             { value: "40", label: "Gruppe 20/40" },
                             { value: "41", label: "Gruppe 20/41" },
@@ -52,10 +51,7 @@ const Home: NextPage = () => {
                         ]}
                     />
                 </div>
-                <TimelineTabs
-                    group={selectedGroup}
-                    currentWeek={getWeekNo()}
-                />
+                <TimelineTabs group={selectedGroup} currentWeek={getWeekNo()} />
             </>
         </>
     );
