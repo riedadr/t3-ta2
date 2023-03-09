@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { type NextPage } from "next";
 import Head from "next/head";
-import { FächerTimeLine } from "~/components/Timeline";
 import { Select } from "@mantine/core";
+import { TimelineTabs } from "~/components/TimelineTabs";
 
 const Home: NextPage = () => {
     const [selectedGroup, setSelectedGroup] = useState<number>(40);
@@ -13,9 +13,8 @@ const Home: NextPage = () => {
         const days = Math.floor(
             (today.valueOf() - year.valueOf()) / (24 * 60 * 60 * 1000)
         );
-        const week = Math.ceil((today.getDay() - 1 + days) / 7);
-        console.log("kw", week);
-        
+        //TODO today.getDay() - 1 + days
+        const week = Math.ceil((today.getDay() + 1 + days) / 7);       
         return week;
     }
 
@@ -54,7 +53,7 @@ const Home: NextPage = () => {
                         ]}
                     />
                 </div>
-                <FächerTimeLine
+                <TimelineTabs
                     group={selectedGroup}
                     currentWeek={getWeekNo()}
                 />

@@ -6,11 +6,13 @@ export type Tfach = {
 	dozent: string;
 	gruppe: string;
   };
+
+  export type TweekDay = "mo" | "di" | "mi" | "do" | "fr"
   
   export type Tgruppe = {
 	stdid: number;
 	kw: number;
-	tag: "mo" | "di" | "mi" | "do" | "fr";
+	tag: TweekDay;
 	stunde: number;
 	fach: number;
 	raum: string;

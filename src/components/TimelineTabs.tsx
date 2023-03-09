@@ -1,18 +1,20 @@
 import { useState, useEffect } from "react";
-import { type Tstunde } from "~/types/db";
-import { Button, Timeline, Text } from "@mantine/core";
+import { type TweekDay, type Tstunde } from "~/types/db";
+import { Timeline, Text, Tabs } from "@mantine/core";
 import { api } from "~/utils/api";
 
-export function FächerTimeLine({
+export function TimelineTabs({
     group,
     currentWeek,
 }: {
     group: number;
     currentWeek: number;
 }) {
-    const [day, setDay] = useState(new Map<number, Tstunde | null>());
+    const [week, setWeek] = useState(
+        new Map<string, Array<Tstunde | null>>()
+    );
     const [currentDay] = useState(getCurrentDay());
-    const [selectedDay, setSelectedDay] = useState(getCurrentDay());
+    const [selectedDay, setSelectedDay] = useState<string>(getCurrentDay());
     const [currentLesson, setCurrentLesson] = useState(-1);
     const woche = api.db.kw.useQuery({ gruppe: group, kw: currentWeek });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -35,9 +37,9 @@ export function FächerTimeLine({
         let curr = -1;
         if (progress > 0) curr = 0; //0800
         if (progress > 45) curr = 1; //0845
-        if (progress > 120) curr = 2; //1000
+        if (progress > 105) curr = 2; //0945
         if (progress > 165) curr = 3; //1045
-        if (progress > 240) curr = 4; //1200
+        if (progress > 225) curr = 4; //1145
         if (progress > 285) curr = 5; //1245
         if (progress > 330) curr = 6; //1330
         if (progress > 390) curr = 7; //1430
@@ -46,20 +48,35 @@ export function FächerTimeLine({
         setCurrentLesson(curr);
     }
 
-    useEffect(() => {
-        function getDayList() {
-            const stundenMap = new Map<number, Tstunde | null>();
-            data.forEach((stunde) => {
-                if (stunde.tag === selectedDay) {
-                    while (stundenMap.size < stunde.stunde)
-                        stundenMap.set(stundenMap.size + 1, null);
-                    stundenMap.set(stunde.stunde, stunde);
-                }
-            });
-            return stundenMap;
-        }
-        setDay(getDayList());
+    function getDayList(list: Tstunde[]) {
+        const stundenArr = [] as Array<Tstunde | null>;
+        list.forEach((stunde) => {
+            while (stundenArr.length + 1 < stunde.stunde)
+                stundenArr.push(null)
+            stundenArr.push(stunde);
+        });
+        return stundenArr;
+    }
 
+    useEffect(() => {
+        const weekMap = new Map<string, Array<Tstunde | null>>();
+        const vlMo = getDayList(data.filter((stunde) => stunde.tag === "mo"));
+        const vlDi = getDayList(data.filter((stunde) => stunde.tag === "di"));
+        const vlMi = getDayList(data.filter((stunde) => stunde.tag === "mi"));
+        const vlDo = getDayList(data.filter((stunde) => stunde.tag === "do"));
+        const vlFr = getDayList(data.filter((stunde) => stunde.tag === "fr"));
+
+        weekMap.set("mo", vlMo);
+        weekMap.set("di", vlDi);
+        weekMap.set("mi", vlMi);
+        weekMap.set("do", vlDo);
+        weekMap.set("fr", vlFr);
+
+        console.log(weekMap);
+        setWeek(weekMap);
+    }, [data]);
+
+    useEffect(() => {
         if (selectedDay === "sa" || selectedDay === "so") setSelectedDay("mo");
         if (selectedDay === currentDay) markProgress();
         else setCurrentLesson(-1);
@@ -68,6 +85,7 @@ export function FächerTimeLine({
     const getTimes = (stdNo: number) => {
         let times = "";
 
+        // Freitag: 5. Stunde ab 11:45
         if (selectedDay === "fr" && stdNo == (5 || 6 || 7)) stdNo = -1 * stdNo;
 
         switch (stdNo) {
@@ -114,55 +132,35 @@ export function FächerTimeLine({
 
     return (
         <>
-            <div className="mb-12 mt-2 flex gap-2">
-                <Button
-                    variant={selectedDay === "mo" ? "filled" : "default"}
-                    onClick={() => setSelectedDay("mo")}
-                >
-                    Mo
-                </Button>
-                <Button
-                    variant={selectedDay === "di" ? "filled" : "default"}
-                    onClick={() => setSelectedDay("di")}
-                >
-                    Di
-                </Button>
-                <Button
-                    variant={selectedDay === "mi" ? "filled" : "default"}
-                    onClick={() => setSelectedDay("mi")}
-                >
-                    Mi
-                </Button>
-                <Button
-                    variant={selectedDay === "do" ? "filled" : "default"}
-                    onClick={() => setSelectedDay("do")}
-                >
-                    Do
-                </Button>
-                <Button
-                    variant={selectedDay === "fr" ? "filled" : "default"}
-                    onClick={() => setSelectedDay("fr")}
-                >
-                    Fr
-                </Button>
-            </div>
-            <section>
-                <Timeline active={currentLesson}>
-                    {[...day].map((stunde, index) => (
-                        <Timeline.Item
-                            key={stunde[1]?.stdid || index}
+            <Tabs value={selectedDay} onTabChange={(e) => setSelectedDay(e as TweekDay)}>
+                <Tabs.List>
+                    <Tabs.Tab value="mo">Montag</Tabs.Tab>
+                    <Tabs.Tab value="di">Dienstag</Tabs.Tab>
+                    <Tabs.Tab value="mi">Mittwoch</Tabs.Tab>
+                    <Tabs.Tab value="do">Donnerstag</Tabs.Tab>
+                    <Tabs.Tab value="fr">Freitag</Tabs.Tab>
+                </Tabs.List>
+
+                
+
+                {week.size >= 5 ? ["mo", "di", "mi", "do", "fr"].map((tag) => (
+                    <Tabs.Panel className="mt-8" key={tag} value={tag}>
+                        <Timeline active={currentLesson}>
+                        {(week.get(tag) as Array<Tstunde | null>).map((stunde, index) => (
+                            <Timeline.Item
+                            key={stunde ? stunde.stdid : index}
                             bullet={index + 1}
                         >
-                            {stunde[1] ? (
+                            {stunde ? (
                                 <div>
                                     <Text color="dimmed">
-                                        {getTimes(index + 1)} | {stunde[1].kurz}
+                                        {getTimes(index + 1)} | {stunde.kurz}
                                     </Text>
                                     <Text color="blue" fw={500}>
-                                        {stunde[1].name}
+                                        {stunde.name}
                                     </Text>
                                     <Text>
-                                        {stunde[1].dozent} | {stunde[1].raum}
+                                        {stunde.dozent} | {stunde.raum}
                                     </Text>
                                 </div>
                             ) : (
@@ -173,9 +171,11 @@ export function FächerTimeLine({
                                 </div>
                             )}
                         </Timeline.Item>
-                    ))}
-                </Timeline>
-            </section>
+                        ))}
+                    </Timeline>
+                    </Tabs.Panel>
+                )) : <p>...</p>}
+            </Tabs>
         </>
     );
 }
