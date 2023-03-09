@@ -5,6 +5,7 @@
  * This is especially useful for Docker builds.
  */
 !process.env.SKIP_ENV_VALIDATION && (await import("./src/env.mjs"));
+import withPWA from 'next-pwa';
 
 /** @type {import("next").NextConfig} */
 const config = {
@@ -17,8 +18,17 @@ const config = {
    * @see https://github.com/vercel/next.js/issues/41980
    */
   i18n: {
-    locales: ["en"],
-    defaultLocale: "en",
+    locales: ["de"],
+    defaultLocale: "de",
   },
 };
-export default config;
+
+const nextConfig = withPWA({
+  dest: "public",
+  disable: process.env.NODE_ENV === 'development',
+  register: true,
+})(
+  config
+);
+
+export default nextConfig;
