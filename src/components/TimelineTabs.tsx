@@ -134,11 +134,11 @@ export function TimelineTabs({
                 onTabChange={(e) => setSelectedDay(e as TweekDay)}
             >
                 <Tabs.List>
-                    <Tabs.Tab value="mo">Montag</Tabs.Tab>
-                    <Tabs.Tab value="di">Dienstag</Tabs.Tab>
-                    <Tabs.Tab value="mi">Mittwoch</Tabs.Tab>
-                    <Tabs.Tab value="do">Donnerstag</Tabs.Tab>
-                    <Tabs.Tab value="fr">Freitag</Tabs.Tab>
+                    <Tabs.Tab value="mo">Mo</Tabs.Tab>
+                    <Tabs.Tab value="di">Di</Tabs.Tab>
+                    <Tabs.Tab value="mi">Mi</Tabs.Tab>
+                    <Tabs.Tab value="do">Do</Tabs.Tab>
+                    <Tabs.Tab value="fr">Fr</Tabs.Tab>
                 </Tabs.List>
 
                 {(data.length && week.size >= 5) ? (

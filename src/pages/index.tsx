@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { type NextPage } from "next";
 import Head from "next/head";
 import { Select } from "@mantine/core";
@@ -7,7 +7,7 @@ import { TimelineTabs } from "~/components/TimelineTabs";
 const Home: NextPage = () => {
     const [selectedGroup, setSelectedGroup] = useState<number>(40);
 
-    function getWeekNo() {
+    const getWeekNo = useMemo(() => {
         const today = new Date();
         const year = new Date(today.getFullYear(), 0, 1);
         const days = Math.floor(
@@ -15,7 +15,7 @@ const Home: NextPage = () => {
         );
         const week = Math.ceil((today.getDay() - 1 + days) / 7);
         return week;
-    }
+    }, []);
 
     const selectGroup = (groupString: string) => {
         const groupNo = parseInt(groupString);
@@ -37,9 +37,7 @@ const Home: NextPage = () => {
             </Head>
             <>
                 <div className="flex items-center justify-between pr-4">
-                    <h1>
-                        Woche {getWeekNo() - 8} (KW {getWeekNo()})
-                    </h1>
+                    <h1>KW {getWeekNo}</h1>
                     <Select
                         className="w-36"
                         value={selectedGroup.toString()}
@@ -51,7 +49,7 @@ const Home: NextPage = () => {
                         ]}
                     />
                 </div>
-                <TimelineTabs group={selectedGroup} currentWeek={getWeekNo()} />
+                <TimelineTabs group={selectedGroup} currentWeek={getWeekNo} />
             </>
         </>
     );
