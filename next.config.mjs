@@ -30,7 +30,13 @@ const nextConfig = withPWA({
   runtimeCaching: [
     {
       urlPattern: "/\/plan.*/",
-      handler: "NetworkFirst",
+      handler: "StaleWhileRevalidate",
+        options: {
+          cacheName: "Stundenplan-Tabellen",
+          expiration: {
+            maxAgeSeconds: 2 * 60 * 60, // 2 hours
+          },
+        },
     }
   ]
 })(
