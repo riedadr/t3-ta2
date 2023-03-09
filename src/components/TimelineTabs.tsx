@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { type TweekDay, type Tstunde } from "~/types/db";
-import { Timeline, Text, Tabs } from "@mantine/core";
+import { Timeline, Text, Tabs, Loader } from "@mantine/core";
 import { api } from "~/utils/api";
 
 export function TimelineTabs({
@@ -10,23 +10,21 @@ export function TimelineTabs({
     group: number;
     currentWeek: number;
 }) {
-    const [week, setWeek] = useState(
-        new Map<string, Array<Tstunde | null>>()
-    );
-    const [currentDay] = useState(getCurrentDay());
-    const [selectedDay, setSelectedDay] = useState<string>(getCurrentDay());
-    const [currentLesson, setCurrentLesson] = useState(-1);
-    const woche = api.db.kw.useQuery({ gruppe: group, kw: currentWeek });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const data = woche.data?.result || [];
-
-    function getCurrentDay() {
+    const getCurrentDay = useMemo(() => {
         const daysOfWeek = ["so", "mo", "di", "mi", "do", "fr", "sa"];
         const today = new Date();
         const dayNo = today.getDay();
 
         return daysOfWeek.at(dayNo) || "mo";
-    }
+    }, [])
+
+    const [week, setWeek] = useState(new Map<string, Array<Tstunde | null>>());
+    const [currentDay] = useState(getCurrentDay);
+    const [selectedDay, setSelectedDay] = useState<string>((getCurrentDay === "sa" || getCurrentDay === "so") ? "mo" : getCurrentDay);
+    const [currentLesson, setCurrentLesson] = useState(-1);
+    const woche = api.db.kw.useQuery({ gruppe: group, kw: currentWeek });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const data = woche.data?.result || [];
 
     function markProgress() {
         const today = new Date();
@@ -49,17 +47,17 @@ export function TimelineTabs({
     }
 
     function getDayList(list: Tstunde[]) {
+        // Gibt ein Array mit den Stunden (bzw. Null bei Freistunden) eines Tages zurück
         const stundenArr = [] as Array<Tstunde | null>;
         list.forEach((stunde) => {
-            while (stundenArr.length + 1 < stunde.stunde)
-                stundenArr.push(null)
+            while (stundenArr.length + 1 < stunde.stunde) stundenArr.push(null);
             stundenArr.push(stunde);
         });
         return stundenArr;
     }
 
     useEffect(() => {
-        const weekMap = new Map<string, Array<Tstunde | null>>();
+        const weekMap = new Map<TweekDay, Array<Tstunde | null>>();
         const vlMo = getDayList(data.filter((stunde) => stunde.tag === "mo"));
         const vlDi = getDayList(data.filter((stunde) => stunde.tag === "di"));
         const vlMi = getDayList(data.filter((stunde) => stunde.tag === "mi"));
@@ -72,15 +70,14 @@ export function TimelineTabs({
         weekMap.set("do", vlDo);
         weekMap.set("fr", vlFr);
 
-        console.log(weekMap);
         setWeek(weekMap);
     }, [data]);
 
     useEffect(() => {
-        if (selectedDay === "sa" || selectedDay === "so") setSelectedDay("mo");
         if (selectedDay === currentDay) markProgress();
         else setCurrentLesson(-1);
     }, [selectedDay, currentDay, data]);
+    
 
     const getTimes = (stdNo: number) => {
         let times = "";
@@ -132,7 +129,10 @@ export function TimelineTabs({
 
     return (
         <>
-            <Tabs value={selectedDay} onTabChange={(e) => setSelectedDay(e as TweekDay)}>
+            <Tabs
+                value={selectedDay}
+                onTabChange={(e) => setSelectedDay(e as TweekDay)}
+            >
                 <Tabs.List>
                     <Tabs.Tab value="mo">Montag</Tabs.Tab>
                     <Tabs.Tab value="di">Dienstag</Tabs.Tab>
@@ -141,40 +141,52 @@ export function TimelineTabs({
                     <Tabs.Tab value="fr">Freitag</Tabs.Tab>
                 </Tabs.List>
 
-                
-
-                {week.size >= 5 ? ["mo", "di", "mi", "do", "fr"].map((tag) => (
-                    <Tabs.Panel className="mt-8" key={tag} value={tag}>
-                        <Timeline active={currentLesson}>
-                        {(week.get(tag) as Array<Tstunde | null>).map((stunde, index) => (
-                            <Timeline.Item
-                            key={stunde ? stunde.stdid : index}
-                            bullet={index + 1}
-                        >
-                            {stunde ? (
-                                <div>
-                                    <Text color="dimmed">
-                                        {getTimes(index + 1)} | {stunde.kurz}
-                                    </Text>
-                                    <Text color="blue" fw={500}>
-                                        {stunde.name}
-                                    </Text>
-                                    <Text>
-                                        {stunde.dozent} | {stunde.raum}
-                                    </Text>
-                                </div>
-                            ) : (
-                                <div>
-                                    <Text color="dimmed" fs="italic">
-                                        {getTimes(index + 1)} | frei
-                                    </Text>
-                                </div>
-                            )}
-                        </Timeline.Item>
-                        ))}
-                    </Timeline>
-                    </Tabs.Panel>
-                )) : <p>...</p>}
+                {(data.length && week.size >= 5) ? (
+                    ["mo", "di", "mi", "do", "fr"].map((tag) => (
+                        <Tabs.Panel className="mt-8" key={tag} value={tag}>
+                            <Timeline active={currentLesson}>
+                                {(week.get(tag) as Array<Tstunde | null>).map(
+                                    (stunde, index) => (
+                                        <Timeline.Item
+                                            key={stunde ? stunde.stdid : index}
+                                            bullet={index + 1}
+                                        >
+                                            {stunde ? (
+                                                <div>
+                                                    <Text color="dimmed">
+                                                        {getTimes(index + 1)} |{" "}
+                                                        {stunde.kurz}
+                                                    </Text>
+                                                    <Text color="blue" fw={500}>
+                                                        {stunde.name}
+                                                    </Text>
+                                                    <Text>
+                                                        {stunde.dozent} |{" "}
+                                                        {stunde.raum}
+                                                    </Text>
+                                                </div>
+                                            ) : (
+                                                <div>
+                                                    <Text
+                                                        color="dimmed"
+                                                        fs="italic"
+                                                    >
+                                                        {getTimes(index + 1)} |
+                                                        frei
+                                                    </Text>
+                                                </div>
+                                            )}
+                                        </Timeline.Item>
+                                    )
+                                )}
+                            </Timeline>
+                        </Tabs.Panel>
+                    ))
+                ) : (
+                    <div className="w-full flex justify-center mt-8">
+                        <Loader />
+                    </div>
+                )}
             </Tabs>
         </>
     );
