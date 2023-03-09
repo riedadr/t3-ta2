@@ -43,7 +43,7 @@ export default class NextDocument extends Document {
                         sizes="512x512"
                         href="/icons/icon-512x512.png"
                     />
-                    <link rel="manifest" href="/manifest.json" />
+                    <link rel="manifest" href="/app.webmanifest" />
                     <link rel="shortcut icon" href="/favicon.ico" />
                 </Head>
                 <body>
