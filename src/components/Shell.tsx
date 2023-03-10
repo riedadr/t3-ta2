@@ -11,6 +11,7 @@ import {
     NavLink,
 } from "@mantine/core";
 import { IconTable, IconTimeline } from "@tabler/icons-react";
+import Link from "next/link";
 import Image from "next/image";
 import logo from "~/assets/logo.png";
 
@@ -35,13 +36,13 @@ export default function Shell({ children }: { children: ReactNode }) {
                     hidden={!opened}
                     width={{ sm: 200, lg: 300 }}
                 >
-                    <a href="/">
+                    <Link replace href="/">
                         <NavLink
                             onClick={() => setOpened((o) => !o)}
                             label="Timeline"
                             icon={<IconTimeline />}
                         />
-                    </a>
+                    </Link>
                     <a href="/plan/40">
                         <NavLink
                             onClick={() => setOpened((o) => !o)}
