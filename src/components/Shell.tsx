@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
 import { type ReactNode, useState } from "react";
 import {
     AppShell,
@@ -10,7 +11,6 @@ import {
     NavLink,
 } from "@mantine/core";
 import { IconTable, IconTimeline } from "@tabler/icons-react";
-import Link from "next/link";
 import Image from "next/image";
 import logo from "~/assets/logo.png";
 
@@ -35,34 +35,34 @@ export default function Shell({ children }: { children: ReactNode }) {
                     hidden={!opened}
                     width={{ sm: 200, lg: 300 }}
                 >
-                    <Link href="/">
+                    <a href="/">
                         <NavLink
                             onClick={() => setOpened((o) => !o)}
                             label="Timeline"
                             icon={<IconTimeline />}
                         />
-                    </Link>
-                    <Link href="/plan/40">
+                    </a>
+                    <a href="/plan/40">
                         <NavLink
                             onClick={() => setOpened((o) => !o)}
                             label="Gruppe 40"
                             icon={<IconTable />}
                         />
-                    </Link>
-                    <Link href="/plan/41">
+                    </a>
+                    <a href="/plan/41">
                         <NavLink
                             onClick={() => setOpened((o) => !o)}
                             label="Gruppe 41"
                             icon={<IconTable />}
                         />
-                    </Link>
-                    <Link href="/plan/42">
+                    </a>
+                    <a href="/plan/42">
                         <NavLink
                             onClick={() => setOpened((o) => !o)}
                             label="Gruppe 42"
                             icon={<IconTable />}
                         />
-                    </Link>
+                    </a>
                 </Navbar>
             }
             header={
