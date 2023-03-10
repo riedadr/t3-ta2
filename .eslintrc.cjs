@@ -26,6 +26,7 @@ const config = {
       },
     ],
   },
+  ignorePatterns: ["*.js"]
 };
 
 module.exports = config;

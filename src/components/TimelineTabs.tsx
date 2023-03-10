@@ -16,11 +16,13 @@ export function TimelineTabs({
         const dayNo = today.getDay();
 
         return daysOfWeek.at(dayNo) || "mo";
-    }, [])
+    }, []);
 
     const [week, setWeek] = useState(new Map<string, Array<Tstunde | null>>());
     const [currentDay] = useState(getCurrentDay);
-    const [selectedDay, setSelectedDay] = useState<string>((getCurrentDay === "sa" || getCurrentDay === "so") ? "mo" : getCurrentDay);
+    const [selectedDay, setSelectedDay] = useState<string>(
+        getCurrentDay === "sa" || getCurrentDay === "so" ? "mo" : getCurrentDay
+    );
     const [currentLesson, setCurrentLesson] = useState(-1);
     const woche = api.db.kw.useQuery({ gruppe: group, kw: currentWeek });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -77,7 +79,7 @@ export function TimelineTabs({
         if (selectedDay === currentDay) markProgress();
         else setCurrentLesson(-1);
     }, [selectedDay, currentDay, data]);
-    
+
 
     const getTimes = (stdNo: number) => {
         let times = "";
@@ -141,7 +143,7 @@ export function TimelineTabs({
                     <Tabs.Tab value="fr">Fr</Tabs.Tab>
                 </Tabs.List>
 
-                {(data.length && week.size >= 5) ? (
+                {data.length && week.size >= 5 ? (
                     ["mo", "di", "mi", "do", "fr"].map((tag) => (
                         <Tabs.Panel className="mt-8" key={tag} value={tag}>
                             <Timeline active={currentLesson}>
@@ -183,7 +185,7 @@ export function TimelineTabs({
                         </Tabs.Panel>
                     ))
                 ) : (
-                    <div className="w-full flex justify-center mt-8">
+                    <div className="mt-8 flex w-full justify-center">
                         <Loader />
                     </div>
                 )}

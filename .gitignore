@@ -46,3 +46,6 @@ yarn-error.log*
 
 # sql
 sql
+
+# sw
+public/sw.*
