@@ -12,8 +12,9 @@ const Home: NextPage = () => {
         const year = new Date(today.getFullYear(), 0, 1);
         const days = Math.floor(
             (today.valueOf() - year.valueOf()) / (24 * 60 * 60 * 1000)
-        );
-        const week = Math.ceil((today.getDay() - 1 + days) / 7);
+        ) + 1;
+        
+        const week = Math.floor(days / 7) + 1;        
         return week;
     }, []);
 
