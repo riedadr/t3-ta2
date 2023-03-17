@@ -80,7 +80,6 @@ export function TimelineTabs({
         else setCurrentLesson(-1);
     }, [selectedDay, currentDay, data]);
 
-
     const getTimes = (stdNo: number) => {
         let times = "";
 
@@ -114,6 +113,12 @@ export function TimelineTabs({
                 break;
             case 9:
                 times = "15:15 - 16:00";
+                break;
+            case 10:
+                times = "16:15 - 17:00";
+                break;
+            case 11:
+                times = "17:00 - 17:45";
                 break;
             case -5:
                 times = "11:45 - 12:30";
