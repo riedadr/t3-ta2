@@ -43,27 +43,27 @@ export default function Shell({ children }: { children: ReactNode }) {
                             icon={<IconTimeline />}
                         />
                     </Link>
-                    <a href="/plan/40">
+                    <Link replace href="/plan/40">
                         <NavLink
                             onClick={() => setOpened((o) => !o)}
                             label="Gruppe 40"
                             icon={<IconTable />}
                         />
-                    </a>
-                    <a href="/plan/41">
+                    </Link>
+                    <Link replace href="/plan/41">
                         <NavLink
                             onClick={() => setOpened((o) => !o)}
                             label="Gruppe 41"
                             icon={<IconTable />}
                         />
-                    </a>
-                    <a href="/plan/42">
+                    </Link>
+                    <Link replace href="/plan/42">
                         <NavLink
                             onClick={() => setOpened((o) => !o)}
                             label="Gruppe 42"
                             icon={<IconTable />}
                         />
-                    </a>
+                    </Link>
                 </Navbar>
             }
             header={

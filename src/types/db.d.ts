@@ -16,7 +16,7 @@ export type Tgruppe = {
     stunde: number;
     fach: number;
     raum: string;
-    änderung: null | "+" | "-";
+    status: null | "+" | "-";
 };
 
 export type Tstunde = Tgruppe & Tfach;
@@ -27,6 +27,7 @@ export type TgrStunde = {
     dozent: string;
     ilias: string;
     raum: string;
+    status: null | "+" | "-";
 };
 
 export type TgrTag = {

@@ -27,6 +27,9 @@ const Home: NextPage = () => {
     useEffect(() => {
         const localGroupNo = window.localStorage.getItem("gruppe");
         if (localGroupNo) setSelectedGroup(parseInt(localGroupNo));
+        
+        console.log(window.history);
+        
     }, []);
 
     return (

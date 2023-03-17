@@ -1,9 +1,5 @@
 import { Button, Modal, Text, UnstyledButton } from "@mantine/core";
-import {
-    type TstdNrs,
-    type TgrWoche,
-    type TgrStunde,
-} from "~/types/db";
+import { type TstdNrs, type TgrWoche, type TgrStunde } from "~/types/db";
 import { type Dispatch, type SetStateAction, useState } from "react";
 import Link from "next/link";
 
@@ -187,13 +183,23 @@ function TableCell({
     data: TgrStunde;
     setInfo: Dispatch<SetStateAction<boolean | TgrStunde>>;
 }) {
+    const getColor = () => {
+        if (!data.status) return "";
+        if (data.status === "+") return "green";
+        if (data.status === "-") return "red";
+    };
     return (
         <UnstyledButton
             style={{ wordBreak: "break-all" }}
             fz="sm"
             onClick={() => setInfo(data)}
         >
-            {data.kurz}
+            <Text
+                td={data.status === "-" ? "line-through" : ""}
+                color={getColor()}
+            >
+                {data.kurz}
+            </Text>
         </UnstyledButton>
     );
 }

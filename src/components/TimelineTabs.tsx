@@ -134,6 +134,12 @@ export function TimelineTabs({
         return times;
     };
 
+    const getColor = (status: null | "+" | "-") => {
+        if (!status) return "blue";
+        if (status === "+") return "green";
+        if (status === "-") return "red";
+    };
+
     return (
         <>
             <Tabs
@@ -164,10 +170,10 @@ export function TimelineTabs({
                                                         {getTimes(index + 1)} |{" "}
                                                         {stunde.kurz}
                                                     </Text>
-                                                    <Text color="blue" fw={500}>
+                                                    <Text td={stunde.status === "-" ? "line-through" : ""} color={getColor(stunde.status)} fw={500}>
                                                         {stunde.name}
                                                     </Text>
-                                                    <Text>
+                                                    <Text td={stunde.status === "-" ? "line-through" : ""}>
                                                         {stunde.dozent} |{" "}
                                                         {stunde.raum}
                                                     </Text>

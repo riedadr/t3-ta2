@@ -55,7 +55,7 @@ export const dbRouter = createTRPCRouter({
           SELECT 
             kw, 
             tag, 
-            JSON_OBJECTAGG(stunde, JSON_OBJECT('fach', fach.name, 'kurz', fach.kurz, "dozent", fach.dozent, "ilias", fach.ilias, "raum", raum)) as stunden 
+            JSON_OBJECTAGG(stunde, JSON_OBJECT('fach', fach.name, 'kurz', fach.kurz, "dozent", fach.dozent, "ilias", fach.ilias, "raum", raum, "status", status)) as stunden 
           FROM 
             gruppe${input.gruppe} JOIN fach ON gruppe${input.gruppe}.fach=fach.fid
           GROUP BY 
