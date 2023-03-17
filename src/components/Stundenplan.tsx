@@ -46,12 +46,18 @@ export default function Stundenplan({
             case 9:
                 times = "15:15 - 16:00";
                 break;
+            case 10:
+                times = "16:15 - 17:00";
+                break;
+            case 11:
+                times = "17:00 - 17:45";
+                break;
         }
 
         return times;
     };
 
-    const rows = [1, 2, 3, 4, 5, 6, 7, 8, 9].map((std) => (
+    const rows = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((std) => (
         <tr key={std}>
             <td>{getTimes(std)}</td>
             <td>
