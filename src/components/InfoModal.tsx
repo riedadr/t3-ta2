@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const InfoModal = () => {
-    const [opened, { open, close }] = useDisclosure(true);
+    const [opened, { open, close }] = useDisclosure(false);
 
     return (
         <>
