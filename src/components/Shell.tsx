@@ -10,14 +10,16 @@ import {
     useMantineTheme,
     NavLink,
 } from "@mantine/core";
+
 import { IconTable, IconTimeline } from "@tabler/icons-react";
 import Link from "next/link";
 import Image from "next/image";
-import logo from "~/assets/logo.png";
+import logo from "~/assets/images/logo.png";
+import { InfoModal } from "./InfoModal";
 
 export default function Shell({ children }: { children: ReactNode }) {
     const theme = useMantineTheme();
-    const [opened, setOpened] = useState(false);
+    const [navOpened, setNavOpened] = useState(false);
     return (
         <AppShell
             styles={{
@@ -33,37 +35,42 @@ export default function Shell({ children }: { children: ReactNode }) {
                 <Navbar
                     p="md"
                     hiddenBreakpoint="sm"
-                    hidden={!opened}
+                    hidden={!navOpened}
                     width={{ sm: 200, lg: 300 }}
                 >
-                    <Link replace href="/">
-                        <NavLink
-                            onClick={() => setOpened((o) => !o)}
-                            label="Timeline"
-                            icon={<IconTimeline />}
-                        />
-                    </Link>
-                    <Link replace href="/plan/40">
-                        <NavLink
-                            onClick={() => setOpened((o) => !o)}
-                            label="Gruppe 40"
-                            icon={<IconTable />}
-                        />
-                    </Link>
-                    <Link replace href="/plan/41">
-                        <NavLink
-                            onClick={() => setOpened((o) => !o)}
-                            label="Gruppe 41"
-                            icon={<IconTable />}
-                        />
-                    </Link>
-                    <Link replace href="/plan/42">
-                        <NavLink
-                            onClick={() => setOpened((o) => !o)}
-                            label="Gruppe 42"
-                            icon={<IconTable />}
-                        />
-                    </Link>
+                    <Navbar.Section grow>
+                        <Link replace href="/">
+                            <NavLink
+                                onClick={() => setNavOpened((o) => !o)}
+                                label="Timeline"
+                                icon={<IconTimeline />}
+                            />
+                        </Link>
+                        <Link replace href="/plan/40">
+                            <NavLink
+                                onClick={() => setNavOpened((o) => !o)}
+                                label="Gruppe 40"
+                                icon={<IconTable />}
+                            />
+                        </Link>
+                        <Link replace href="/plan/41">
+                            <NavLink
+                                onClick={() => setNavOpened((o) => !o)}
+                                label="Gruppe 41"
+                                icon={<IconTable />}
+                            />
+                        </Link>
+                        <Link replace href="/plan/42">
+                            <NavLink
+                                onClick={() => setNavOpened((o) => !o)}
+                                label="Gruppe 42"
+                                icon={<IconTable />}
+                            />
+                        </Link>
+                    </Navbar.Section>
+                    <Navbar.Section>
+                        <InfoModal />
+                    </Navbar.Section>
                 </Navbar>
             }
             header={
@@ -81,8 +88,8 @@ export default function Shell({ children }: { children: ReactNode }) {
                         >
                             <Burger
                                 title="open menu"
-                                opened={opened}
-                                onClick={() => setOpened((o) => !o)}
+                                opened={navOpened}
+                                onClick={() => setNavOpened((o) => !o)}
                                 size="md"
                                 color={theme.colors.gray[6]}
                                 mr="xl"

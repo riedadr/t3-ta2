@@ -181,7 +181,7 @@ export function TimelineTabs({
                                             ) : (
                                                 <div>
                                                     <Text
-                                                        color="dimmed"
+                                                        color="gray"
                                                         fs="italic"
                                                     >
                                                         {getTimes(index + 1)} |
