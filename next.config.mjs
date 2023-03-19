@@ -8,7 +8,7 @@
 import withPWA from "next-pwa";
 
 /** @type {import("next").NextConfig} */
-const config = {
+const nextConfig = {
     reactStrictMode: true,
 
     /**
@@ -23,11 +23,13 @@ const config = {
     },
 };
 
-const nextConfig = withPWA({
+//TODO export pwaConfig as default
+const pwaConfig = withPWA({
     dest: "public",
     disable: process.env.NODE_ENV === "development",
     register: true,
     swSrc: 'service-worker.js',
-})(config);
+})(nextConfig);
 
-export default nextConfig;
+const exportedConfig = process.env.NODE_ENV === "development" ? nextConfig : pwaConfig;
+export default exportedConfig;
