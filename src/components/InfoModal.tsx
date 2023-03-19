@@ -1,7 +1,7 @@
 import React from "react";
 import { useDisclosure } from "@mantine/hooks";
-import { Avatar, Button, Grid, Modal, Text } from "@mantine/core";
-import { IconBrandTabler, IconInfoCircle } from "@tabler/icons-react";
+import { Avatar, Button, Divider, Grid, Modal, Text } from "@mantine/core";
+import { IconBrandGithub, IconBrandMantine, IconBrandMysql, IconBrandNextjs, IconBrandPlanetscale, IconBrandReact, IconBrandTabler, IconCloud, IconInfoCircle } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -19,15 +19,15 @@ export const InfoModal = () => {
                 <Text color="red">
                     Dies ist keine offizielle Anwendung der HföD.
                 </Text>
-                <section className="mt-4">
+                <section className="mt-8">
                     <Text fz="lg">Progressive Web App</Text>
                     <Text>
                         Bei dieser Anwendung handelt es sich um eine PWA. Diese
-                        kann auf einem GErät installiert und wie eine native App
+                        kann auf einem Gerät installiert und wie eine native App
                         bedient werden.
                     </Text>
                 </section>
-                <section className="mt-4">
+                <section className="mt-8">
                     <Text fz="lg">Technologien und Frameworks</Text>
                     <Text>
                         Diese Anwendung wurde aus dem{" "}
@@ -36,7 +36,7 @@ export const InfoModal = () => {
                         </Link>{" "}
                         heraus aufgebaut.
                         <T3links />
-                        <Text mt={8}>Hosting:</Text>
+                        <Divider my="sm" />
                         <Grid>
                             <Grid.Col span={4}>
                                 <Button
@@ -46,34 +46,10 @@ export const InfoModal = () => {
                                     fullWidth
                                     variant="light"
                                     leftIcon={
-                                        <Image
-                                            src="/images/github.svg"
-                                            height={28}
-                                            width={28}
-                                            alt=""
-                                        />
+                                        <IconBrandGithub />
                                     }
                                 >
                                     GitHub
-                                </Button>
-                            </Grid.Col>
-                            <Grid.Col span={4}>
-                                <Button
-                                    component="a"
-                                    href="https://caprover.com/"
-                                    target="_blank"
-                                    fullWidth
-                                    variant="light"
-                                    leftIcon={
-                                        <Image
-                                            src="/images/caprover.png"
-                                            height={28}
-                                            width={28}
-                                            alt=""
-                                        />
-                                    }
-                                >
-                                    Caprover
                                 </Button>
                             </Grid.Col>
                             <Grid.Col span={4}>
@@ -84,12 +60,7 @@ export const InfoModal = () => {
                                     fullWidth
                                     variant="light"
                                     leftIcon={
-                                        <Image
-                                            src="/images/oracle.svg"
-                                            height={28}
-                                            width={28}
-                                            alt=""
-                                        />
+                                        <IconCloud />
                                     }
                                 >
                                     Oracle
@@ -157,12 +128,7 @@ const T3links = () => {
                     fullWidth
                     variant="light"
                     leftIcon={
-                        <Image
-                            src="/images/react.svg"
-                            height={28}
-                            width={28}
-                            alt=""
-                        />
+                        <IconBrandReact />
                     }
                 >
                     React
@@ -174,12 +140,7 @@ const T3links = () => {
                     fullWidth
                     variant="light"
                     leftIcon={
-                        <Image
-                            src="/images/next.svg"
-                            height={28}
-                            width={28}
-                            alt=""
-                        />
+                        <IconBrandNextjs />
                     }
                 >
                     NEXT.js
@@ -210,12 +171,7 @@ const T3links = () => {
                     fullWidth
                     variant="light"
                     leftIcon={
-                        <Image
-                            src="/images/planetscale.svg"
-                            height={28}
-                            width={28}
-                            alt=""
-                        />
+                        <IconBrandPlanetscale />
                     }
                 >
                     Planetscale
@@ -227,12 +183,7 @@ const T3links = () => {
                     fullWidth
                     variant="light"
                     leftIcon={
-                        <Image
-                            src="/images/mysql.png"
-                            height={28}
-                            width={28}
-                            alt=""
-                        />
+                        <IconBrandMysql />
                     }
                 >
                     MySQL
@@ -268,12 +219,7 @@ const T3links = () => {
                     fullWidth
                     variant="light"
                     leftIcon={
-                        <Image
-                            src="/images/mantine.svg"
-                            height={28}
-                            width={28}
-                            alt=""
-                        />
+                        <IconBrandMantine />
                     }
                 >
                     Mantine
@@ -286,7 +232,7 @@ const T3links = () => {
                     variant="light"
                     leftIcon={<IconBrandTabler size={28} />}
                 >
-                    tabler-icons
+                    tabler
                 </Button>
             </Grid.Col>
         </Grid>
