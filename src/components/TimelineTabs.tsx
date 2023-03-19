@@ -2,6 +2,8 @@ import { useState, useEffect, useMemo } from "react";
 import { type TweekDay, type Tstunde } from "~/types/db";
 import { Timeline, Text, Tabs, Loader } from "@mantine/core";
 import { api } from "~/utils/api";
+import Link from "next/link";
+import { IconWindowMaximize } from "@tabler/icons-react";
 
 export function TimelineTabs({
     group,
@@ -165,18 +167,41 @@ export function TimelineTabs({
                                             bullet={index + 1}
                                         >
                                             {stunde ? (
-                                                <div>
+                                                <div className="max-w-md">
                                                     <Text color="dimmed">
                                                         {getTimes(index + 1)} |{" "}
                                                         {stunde.kurz}
                                                     </Text>
-                                                    <Text td={stunde.status === "-" ? "line-through" : ""} color={getColor(stunde.status)} fw={500}>
+                                                    <Text
+                                                        td={
+                                                            stunde.status ===
+                                                            "-"
+                                                                ? "line-through"
+                                                                : ""
+                                                        }
+                                                        color={getColor(
+                                                            stunde.status
+                                                        )}
+                                                        fw={500}
+                                                    >
                                                         {stunde.name}
                                                     </Text>
-                                                    <Text td={stunde.status === "-" ? "line-through" : ""}>
-                                                        {stunde.dozent} |{" "}
-                                                        {stunde.raum}
-                                                    </Text>
+                                                    <div className="flex justify-between">
+                                                        <Text
+                                                            td={
+                                                                stunde.status ===
+                                                                "-"
+                                                                    ? "line-through"
+                                                                    : ""
+                                                            }
+                                                        >
+                                                            {stunde.dozent} |{" "}
+                                                            {stunde.raum}
+                                                        </Text>
+                                                        {stunde.ilias && <Link href={stunde.ilias} target="_blank">
+                                                            <IconWindowMaximize />
+                                                        </Link>}
+                                                    </div>
                                                 </div>
                                             ) : (
                                                 <div>
