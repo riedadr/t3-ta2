@@ -34,7 +34,7 @@ export function getStaticPaths() {
 			"/plan/41",
 			"/plan/42",
 		],
-		fallback: true
+		fallback: false
 	}
 }
 
