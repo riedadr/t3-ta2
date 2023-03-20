@@ -185,8 +185,9 @@ function TableCell({
 }) {
     const getColor = () => {
         if (!data.status) return "";
-        if (data.status === "+") return "green";
-        if (data.status === "-") return "red";
+        if (data.status === "+") return "green";    // Vorlesung entfällt
+        if (data.status === "-") return "red";      // Vorlesung hinzugefügt/verschoben
+        if (data.status === "0") return "yellow";   // Änderung, z.B. Raum
     };
     return (
         <UnstyledButton
