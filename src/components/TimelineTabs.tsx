@@ -138,8 +138,9 @@ export function TimelineTabs({
 
     const getColor = (status: null | "+" | "-") => {
         if (!status) return "blue";
-        if (status === "+") return "green";
-        if (status === "-") return "red";
+        if (status === "+") return "green";    // Vorlesung entfällt
+        if (status === "-") return "red";      // Vorlesung hinzugefügt/verschoben
+        if (status === "0") return "yellow";   // Änderung, z.B. Raum
     };
 
     return (
