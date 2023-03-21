@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
-import { type ReactNode, useState, useMemo } from "react";
+import { type ReactNode, useState } from "react";
 import {
     AppShell,
     Navbar,
@@ -20,18 +20,6 @@ import { InfoModal } from "./InfoModal";
 export default function Shell({ children }: { children: ReactNode }) {
     const theme = useMantineTheme();
     const [navOpened, setNavOpened] = useState(false);
-
-    const getWeekNo = useMemo(() => {
-        const today = new Date();
-        const year = new Date(today.getFullYear(), 0, 1);
-        const days =
-            Math.floor(
-                (today.valueOf() - year.valueOf()) / (24 * 60 * 60 * 1000)
-            ) + 1;
-
-        const week = Math.floor(days / 7) + 1;
-        return week;
-    }, []);
 
     return (
         <AppShell
@@ -59,21 +47,21 @@ export default function Shell({ children }: { children: ReactNode }) {
                                 icon={<IconTimeline />}
                             />
                         </Link>
-                        <Link replace href={`/plan/40#${getWeekNo}`}>
+                        <Link replace href="/plan/40">
                             <NavLink
                                 onClick={() => setNavOpened((o) => !o)}
                                 label="Gruppe 40"
                                 icon={<IconTable />}
                             />
                         </Link>
-                        <Link replace href={`/plan/41#${getWeekNo}`}>
+                        <Link replace href="/plan/41">
                             <NavLink
                                 onClick={() => setNavOpened((o) => !o)}
                                 label="Gruppe 41"
                                 icon={<IconTable />}
                             />
                         </Link>
-                        <Link replace href={`/plan/42#${getWeekNo}`}>
+                        <Link replace href="/plan/42">
                             <NavLink
                                 onClick={() => setNavOpened((o) => !o)}
                                 label="Gruppe 42"

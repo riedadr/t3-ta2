@@ -4,13 +4,15 @@ import { type Dispatch, type SetStateAction, useState } from "react";
 import Link from "next/link";
 
 export default function Stundenplan({
-    wocheData,
-    firstMonday,
     kw,
+    currentWeek,
+    firstMonday,
+    wocheData,
 }: {
-    wocheData?: TgrWoche;
-    firstMonday: Date;
     kw: string;
+    currentWeek: number;
+    firstMonday: Date;
+    wocheData?: TgrWoche;
 }) {
     const [showInfo, setShowInfo] = useState<boolean | TgrStunde>(false);
     const [datesOfWeek] = useState(getStartDate());
@@ -144,7 +146,7 @@ export default function Stundenplan({
             <thead id={kw}>
                 <tr>
                     <th className="pt-8 text-xl" colSpan={6}>
-                        KW {kw} ({datesOfWeek})
+                        <Text color={currentWeek == parseInt(kw) ? "blue" : "white"}>KW {kw} ({datesOfWeek})</Text>
                     </th>
                 </tr>
                 <tr>

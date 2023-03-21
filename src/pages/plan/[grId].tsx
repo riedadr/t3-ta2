@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import Head from "next/head";
 import { useRef } from "react";
 import { type InferGetStaticPropsType } from "next";
@@ -43,6 +43,18 @@ export default function StundenplanPage(
     const wochen = Object.keys(wochenplan as object);
     const title = `Stundenplan - 20/${grId}`;
 
+    const getWeekNo = useMemo(() => {
+        const today = new Date();
+        const year = new Date(today.getFullYear(), 0, 1);
+        const days =
+            Math.floor(
+                (today.valueOf() - year.valueOf()) / (24 * 60 * 60 * 1000)
+            ) + 1;
+
+        const week = Math.floor(days / 7) + 1;
+        return week;
+    }, []);
+
     function getFirstMondayOfYear() {
         const d = new Date(new Date().getFullYear(), 0, 1);
         while (d.getDay() !== 1) {
@@ -79,6 +91,7 @@ export default function StundenplanPage(
                     <Stundenplan
                         key={key}
                         kw={key}
+                        currentWeek={getWeekNo}
                         firstMonday={firstMondayOfYear.current}
                         wocheData={wochenplan[parseInt(key) as TkwNrs]}
                     />
