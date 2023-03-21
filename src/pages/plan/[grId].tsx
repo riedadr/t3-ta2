@@ -1,11 +1,12 @@
 import React from "react";
 import Head from "next/head";
+import { useRef, useEffect } from "react";
 import { type InferGetStaticPropsType } from "next";
 import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import { dbRouter } from "~/server/api/routers/db";
 import { type TkwNrs } from "~/types/db";
 import Stundenplan from "~/components/Stundenplan";
-import { ColorSwatch, Group, Table, Text } from "@mantine/core";
+import { ColorSwatch, Table, Text } from "@mantine/core";
 import { useRouter } from "next/router";
 
 export async function getStaticProps({ params }: { params: { grId: string } }) {
@@ -40,11 +41,20 @@ export default function StundenplanPage(
     const { data } = props;
     const wochenplan = data.result[0]?.result || {};
     const wochen = Object.keys(wochenplan as object);
+    const firstMondayOfYear = useRef(getFirstMondayOfYear());
+
+    function getFirstMondayOfYear() {
+        const d = new Date(new Date().getFullYear(), 0, 1);
+        while (d.getDay() !== 1) {
+            d.setDate(d.getDate() + 1);
+        }
+        return d;
+    }
 
     return (
         <>
             <Head>
-                <title>Stundenplan - 20/40</title>
+                <title>Stundenplan - 20/{grId}</title>
                 <meta name="description" content="Stundenplan VI20/23 TA2" />
             </Head>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
@@ -69,6 +79,7 @@ export default function StundenplanPage(
                     <Stundenplan
                         key={key}
                         kw={key}
+                        firstMonday={firstMondayOfYear.current}
                         wocheData={wochenplan[parseInt(key) as TkwNrs]}
                     />
                 ))}

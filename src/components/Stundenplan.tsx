@@ -2,15 +2,19 @@ import { Button, Modal, Text, UnstyledButton } from "@mantine/core";
 import { type TstdNrs, type TgrWoche, type TgrStunde } from "~/types/db";
 import { type Dispatch, type SetStateAction, useState } from "react";
 import Link from "next/link";
+import { addWeeks } from "date-fns";
 
 export default function Stundenplan({
     wocheData,
+    firstMonday,
     kw,
 }: {
     wocheData?: TgrWoche;
+    firstMonday: Date;
     kw: string;
 }) {
     const [showInfo, setShowInfo] = useState<boolean | TgrStunde>(false);
+    const [datesOfWeek, setDatesOfWeek] = useState(getStartDate());
     const getTimes = (stdNo: number) => {
         let times = "";
 
@@ -52,6 +56,23 @@ export default function Stundenplan({
 
         return times;
     };
+
+    function getStartDate() {
+        const fm = new Date(firstMonday);
+        const monday = addWeeks(fm, parseInt(kw) - 1);
+        const mondayString = `${monday.getDate()}.${
+            monday.getMonth() + 1
+        }.${monday.getFullYear()}`;
+
+        const friday = new Date(monday);
+        friday.setDate(friday.getDate() + 4);
+        const fridayString = `${friday.getDate()}.${
+            friday.getMonth() + 1
+        }.${friday.getFullYear()}`;
+
+        console.log("woche", kw, mondayString, fridayString);
+        return `${mondayString} - ${fridayString}`;
+    }
 
     const rows = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((std) => (
         <tr key={std}>
@@ -123,7 +144,7 @@ export default function Stundenplan({
             <thead>
                 <tr>
                     <th className="pt-8 text-xl" colSpan={6}>
-                        KW {kw}
+                        KW {kw} ({datesOfWeek})
                     </th>
                 </tr>
                 <tr>
@@ -185,9 +206,9 @@ function TableCell({
 }) {
     const getColor = () => {
         if (!data.status) return "";
-        if (data.status === "+") return "green";    // Vorlesung entfällt
-        if (data.status === "-") return "red";      // Vorlesung hinzugefügt/verschoben
-        if (data.status === "0") return "yellow";   // Änderung, z.B. Raum
+        if (data.status === "+") return "green"; // Vorlesung entfällt
+        if (data.status === "-") return "red"; // Vorlesung hinzugefügt/verschoben
+        if (data.status === "0") return "yellow"; // Änderung, z.B. Raum
     };
     return (
         <UnstyledButton
