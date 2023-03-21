@@ -70,7 +70,6 @@ export default function Stundenplan({
             friday.getMonth() + 1
         }.${friday.getFullYear()}`;
 
-        console.log("woche", kw, mondayString, fridayString);
         return `${mondayString} - ${fridayString}`;
     }
 
