@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
-import { type ReactNode, useState } from "react";
+import { type ReactNode, useState, useMemo } from "react";
 import {
     AppShell,
     Navbar,
@@ -20,6 +20,19 @@ import { InfoModal } from "./InfoModal";
 export default function Shell({ children }: { children: ReactNode }) {
     const theme = useMantineTheme();
     const [navOpened, setNavOpened] = useState(false);
+
+    const getWeekNo = useMemo(() => {
+        const today = new Date();
+        const year = new Date(today.getFullYear(), 0, 1);
+        const days =
+            Math.floor(
+                (today.valueOf() - year.valueOf()) / (24 * 60 * 60 * 1000)
+            ) + 1;
+
+        const week = Math.floor(days / 7) + 1;
+        return week;
+    }, []);
+
     return (
         <AppShell
             styles={{
@@ -46,21 +59,21 @@ export default function Shell({ children }: { children: ReactNode }) {
                                 icon={<IconTimeline />}
                             />
                         </Link>
-                        <Link replace href="/plan/40">
+                        <Link replace href={`/plan/40#${getWeekNo}`}>
                             <NavLink
                                 onClick={() => setNavOpened((o) => !o)}
                                 label="Gruppe 40"
                                 icon={<IconTable />}
                             />
                         </Link>
-                        <Link replace href="/plan/41">
+                        <Link replace href={`/plan/41#${getWeekNo}`}>
                             <NavLink
                                 onClick={() => setNavOpened((o) => !o)}
                                 label="Gruppe 41"
                                 icon={<IconTable />}
                             />
                         </Link>
-                        <Link replace href="/plan/42">
+                        <Link replace href={`/plan/42#${getWeekNo}`}>
                             <NavLink
                                 onClick={() => setNavOpened((o) => !o)}
                                 label="Gruppe 42"
@@ -96,7 +109,11 @@ export default function Shell({ children }: { children: ReactNode }) {
                             />
                         </MediaQuery>
 
-                        <div className="flex w-full items-center justify-between">
+                        <Link
+                            className="flex w-full items-center justify-between"
+                            replace
+                            href="/"
+                        >
                             <Text size="lg">
                                 Stundenplan
                                 <Text fz="sm" component="sup" color="orange">
@@ -104,7 +121,7 @@ export default function Shell({ children }: { children: ReactNode }) {
                                 </Text>
                             </Text>
                             <Image height={48} src={logo} alt="logo" />
-                        </div>
+                        </Link>
                     </div>
                 </Header>
             }

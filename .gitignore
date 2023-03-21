@@ -49,3 +49,5 @@ sql
 
 # sw
 public/sw.*
+
+package-lock.old.json
