@@ -2,19 +2,20 @@ import { Button, Modal, Text, UnstyledButton } from "@mantine/core";
 import { type TstdNrs, type TgrWoche, type TgrStunde } from "~/types/db";
 import { type Dispatch, type SetStateAction, useState } from "react";
 import Link from "next/link";
-import { addWeeks } from "date-fns";
 
 export default function Stundenplan({
-    wocheData,
-    firstMonday,
     kw,
+    currentWeek,
+    firstMonday,
+    wocheData,
 }: {
-    wocheData?: TgrWoche;
-    firstMonday: Date;
     kw: string;
+    currentWeek: number;
+    firstMonday: Date;
+    wocheData?: TgrWoche;
 }) {
     const [showInfo, setShowInfo] = useState<boolean | TgrStunde>(false);
-    const [datesOfWeek, setDatesOfWeek] = useState(getStartDate());
+    const [datesOfWeek] = useState(getStartDate());
     const getTimes = (stdNo: number) => {
         let times = "";
 
@@ -59,7 +60,9 @@ export default function Stundenplan({
 
     function getStartDate() {
         const fm = new Date(firstMonday);
-        const monday = addWeeks(fm, parseInt(kw) - 1);
+        const monday = new Date(
+            fm.setDate(fm.getDate() + (parseInt(kw) - 1) * 7)
+        );
         const mondayString = `${monday.getDate()}.${
             monday.getMonth() + 1
         }.${monday.getFullYear()}`;
@@ -140,10 +143,10 @@ export default function Stundenplan({
     ));
     return (
         <>
-            <thead>
+            <thead id={kw}>
                 <tr>
                     <th className="pt-8 text-xl" colSpan={6}>
-                        KW {kw} ({datesOfWeek})
+                        <Text color={currentWeek == parseInt(kw) ? "blue" : "white"}>KW {kw} ({datesOfWeek})</Text>
                     </th>
                 </tr>
                 <tr>

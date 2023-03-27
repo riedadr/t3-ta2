@@ -20,6 +20,7 @@ import { InfoModal } from "./InfoModal";
 export default function Shell({ children }: { children: ReactNode }) {
     const theme = useMantineTheme();
     const [navOpened, setNavOpened] = useState(false);
+
     return (
         <AppShell
             styles={{
@@ -96,7 +97,11 @@ export default function Shell({ children }: { children: ReactNode }) {
                             />
                         </MediaQuery>
 
-                        <div className="flex w-full items-center justify-between">
+                        <Link
+                            className="flex w-full items-center justify-between"
+                            replace
+                            href="/"
+                        >
                             <Text size="lg">
                                 Stundenplan
                                 <Text fz="sm" component="sup" color="blue">
@@ -104,7 +109,7 @@ export default function Shell({ children }: { children: ReactNode }) {
                                 </Text>
                             </Text>
                             <Image height={48} src={logo} alt="logo" />
-                        </div>
+                        </Link>
                     </div>
                 </Header>
             }
