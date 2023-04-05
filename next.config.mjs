@@ -28,7 +28,6 @@ const pwaConfig = withPWA({
     dest: "public",
     disable: process.env.NODE_ENV === "development",
     register: true,
-    swSrc: 'service-worker.js',
 })(nextConfig);
 
 const exportedConfig = process.env.NODE_ENV === "development" ? nextConfig : pwaConfig;
