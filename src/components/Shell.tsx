@@ -105,7 +105,7 @@ export default function Shell({ children }: { children: ReactNode }) {
                             <Text size="lg">
                                 Stundenplan
                                 <Text fz="sm" component="sup" color="blue">
-                                    VI20/23 TA2
+                                    TA2
                                 </Text>
                             </Text>
                             <Image height={48} src={logo} alt="logo" />
