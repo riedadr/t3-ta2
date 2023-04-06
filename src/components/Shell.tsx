@@ -9,9 +9,10 @@ import {
     Burger,
     useMantineTheme,
     NavLink,
+    Divider,
 } from "@mantine/core";
 
-import { IconTable, IconTimeline } from "@tabler/icons-react";
+import { IconTable, IconTimeline, IconToolsKitchen2 } from "@tabler/icons-react";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "~/assets/images/logo.png";
@@ -47,6 +48,7 @@ export default function Shell({ children }: { children: ReactNode }) {
                                 icon={<IconTimeline />}
                             />
                         </Link>
+                        <Divider my="xs" label="Stundenpläne" />
                         <Link replace href="/plan/40">
                             <NavLink
                                 onClick={() => setNavOpened((o) => !o)}
@@ -66,6 +68,14 @@ export default function Shell({ children }: { children: ReactNode }) {
                                 onClick={() => setNavOpened((o) => !o)}
                                 label="Gruppe 42"
                                 icon={<IconTable />}
+                            />
+                        </Link>
+                        <Divider my="xs" label="Info" />
+                        <Link href="https://www.studentenwerk-oberfranken.de/essen/speiseplaene/hof.html" target="_blank">
+                            <NavLink
+                                onClick={() => setNavOpened((o) => !o)}
+                                label="Speiseplan"
+                                icon={<IconToolsKitchen2 />}
                             />
                         </Link>
                     </Navbar.Section>
