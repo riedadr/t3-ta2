@@ -70,6 +70,56 @@ export default function Shell({ children }: { children: ReactNode }) {
                                 icon={<IconTable />}
                             />
                         </Link>
+                        <Divider my="xs" label="Gruppe 20/40" />
+                        <Link replace href="/plan/401">
+                            <NavLink
+                                onClick={() => setNavOpened((o) => !o)}
+                                label="Kleingruppe 1 (20/40/1)"
+                                icon={<IconTable />}
+                            />
+                        </Link>
+                        <Link replace href="/plan/402">
+                            <NavLink
+                                onClick={() => setNavOpened((o) => !o)}
+                                label="Kleingruppe 2 (20/40/2)"
+                                icon={<IconTable />}
+                            />
+                        </Link>
+
+                        <Divider my="xs" label="Gruppe 21/41" />
+                        <Link replace href="/plan/411">
+                            <NavLink
+                                onClick={() => setNavOpened((o) => !o)}
+                                label="Kleingruppe 1 (20/41/1)"
+                                icon={<IconTable />}
+                            />
+                        </Link>
+                        <Link replace href="/plan/412">
+                            <NavLink
+                                onClick={() => setNavOpened((o) => !o)}
+                                label="Kleingruppe 2 (20/41/2)"
+                                icon={<IconTable />}
+                            />
+                        </Link>
+
+                        <Divider my="xs" label="Gruppe 20/42" />
+                        <Link replace href="/plan/421">
+                            <NavLink
+                                onClick={() => setNavOpened((o) => !o)}
+                                label="Kleingruppe 1 (20/42/1)"
+                                icon={<IconTable />}
+                            />
+                        </Link>
+                        <Link replace href="/plan/422">
+                            <NavLink
+                                onClick={() => setNavOpened((o) => !o)}
+                                label="Kleingruppe 2 (20/42/2)"
+                                icon={<IconTable />}
+                            />
+                        </Link>
+
+
+
                         <Divider my="xs" label="Info" />
                         <Link href="https://www.studentenwerk-oberfranken.de/essen/speiseplaene/hof.html" target="_blank">
                             <NavLink

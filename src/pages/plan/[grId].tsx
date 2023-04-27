@@ -1,6 +1,5 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useRef } from "react";
 import Head from "next/head";
-import { useRef } from "react";
 import { type InferGetStaticPropsType } from "next";
 import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import { dbRouter } from "~/server/api/routers/db";
@@ -28,7 +27,7 @@ export async function getStaticProps({ params }: { params: { grId: string } }) {
 
 export function getStaticPaths() {
     return {
-        paths: ["/plan/40", "/plan/41", "/plan/42"],
+        paths: ["/plan/40", "/plan/41", "/plan/42", "/plan/401", "/plan/411", "/plan/421", "/plan/402", "/plan/412", "/plan/422"],
         fallback: false,
     };
 }
@@ -41,7 +40,12 @@ export default function StundenplanPage(
     const theme = useMantineTheme();
     const wochenplan = data.result[0]?.result || {};
     const wochen = Object.keys(wochenplan as object);
-    const title = `Stundenplan - 20/${grId}`;
+    const getGrId = () => {
+        if (grId.length <= 2) return grId;
+        const grIdArr = grId.split("");
+        return `${grIdArr[0]!}${grIdArr[1]!}/${grIdArr[2]!}`
+    }
+    const title = `Stundenplan - 20/${getGrId()}`;
 
     const getWeekNo = useMemo(() => {
         const today = new Date();
@@ -70,7 +74,7 @@ export default function StundenplanPage(
                 <meta name="description" content="Stundenplan VI20/23 TA2" />
             </Head>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
-                <h1>Gruppe {grId}</h1>
+                <h1>Gruppe 20/{getGrId()}</h1>
                 <div className="flex justify-end gap-2">
                     <div className="flex items-baseline gap-1">
                         <ColorSwatch size={10} color={theme.colors.red[8]} />
