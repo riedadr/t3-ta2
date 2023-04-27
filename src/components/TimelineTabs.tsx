@@ -47,6 +47,10 @@ export function TimelineTabs({
         if (progress > 390) curr = 7; //1430
         if (progress > 435) curr = 8; //1515
         if (progress > 480) curr = 9; //1600
+        if (progress > 540) curr = 10;
+        if (progress > 600) curr = 11;
+        if (progress > 660) curr = 12;
+        if (progress > 720) curr = 13;
         setCurrentLesson(curr);
     }
 
@@ -122,6 +126,12 @@ export function TimelineTabs({
             case 11:
                 times = "17:00 - 17:45";
                 break;
+            case 12:
+                times = "18:00 - 18:45";
+                break;
+            case 13:
+                times = "18:45 - 19:30";
+                break;
             case -5:
                 times = "11:45 - 12:30";
                 break;
@@ -138,9 +148,9 @@ export function TimelineTabs({
 
     const getColor = (status: null | "+" | "-") => {
         if (!status) return "blue";
-        if (status === "+") return "green";    // Vorlesung entfällt
-        if (status === "-") return "red";      // Vorlesung hinzugefügt/verschoben
-        if (status === "0") return "yellow";   // Änderung, z.B. Raum
+        if (status === "+") return "green"; // Vorlesung entfällt
+        if (status === "-") return "red"; // Vorlesung hinzugefügt/verschoben
+        if (status === "0") return "yellow"; // Änderung, z.B. Raum
     };
 
     return (
@@ -199,9 +209,16 @@ export function TimelineTabs({
                                                             {stunde.dozent} |{" "}
                                                             {stunde.raum}
                                                         </Text>
-                                                        {stunde.ilias && <Link href={stunde.ilias} target="_blank">
-                                                            <IconWindowMaximize />
-                                                        </Link>}
+                                                        {stunde.ilias && (
+                                                            <Link
+                                                                href={
+                                                                    stunde.ilias
+                                                                }
+                                                                target="_blank"
+                                                            >
+                                                                <IconWindowMaximize />
+                                                            </Link>
+                                                        )}
                                                     </div>
                                                 </div>
                                             ) : (
