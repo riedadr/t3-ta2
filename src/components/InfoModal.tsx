@@ -77,13 +77,14 @@ export const InfoModal = () => {
                 </section>
             </Modal>
             <Button
+                className="mt-4"
                 leftIcon={<IconInfoCircle />}
                 title="Informationen anzeigen"
                 fullWidth
                 variant="outline"
                 onClick={open}
             >
-                Info
+                App-Info
             </Button>
         </>
     );

@@ -10,9 +10,14 @@ import {
     useMantineTheme,
     NavLink,
     Divider,
+    ScrollArea,
 } from "@mantine/core";
 
-import { IconTable, IconTimeline, IconToolsKitchen2 } from "@tabler/icons-react";
+import {
+    IconTable,
+    IconTimeline,
+    IconToolsKitchen2,
+} from "@tabler/icons-react";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "~/assets/images/logo.png";
@@ -40,7 +45,7 @@ export default function Shell({ children }: { children: ReactNode }) {
                     hidden={!navOpened}
                     width={{ sm: 200, lg: 300 }}
                 >
-                    <Navbar.Section grow>
+                    <Navbar.Section>
                         <Link replace href="/">
                             <NavLink
                                 onClick={() => setNavOpened((o) => !o)}
@@ -48,28 +53,8 @@ export default function Shell({ children }: { children: ReactNode }) {
                                 icon={<IconTimeline />}
                             />
                         </Link>
-                        <Divider my="xs" label="Stundenpläne" />
-                        <Link replace href="/plan/40">
-                            <NavLink
-                                onClick={() => setNavOpened((o) => !o)}
-                                label="Gruppe 40"
-                                icon={<IconTable />}
-                            />
-                        </Link>
-                        <Link replace href="/plan/41">
-                            <NavLink
-                                onClick={() => setNavOpened((o) => !o)}
-                                label="Gruppe 41"
-                                icon={<IconTable />}
-                            />
-                        </Link>
-                        <Link replace href="/plan/42">
-                            <NavLink
-                                onClick={() => setNavOpened((o) => !o)}
-                                label="Gruppe 42"
-                                icon={<IconTable />}
-                            />
-                        </Link>
+                    </Navbar.Section>
+                    <Navbar.Section grow component={ScrollArea}>
                         <Divider my="xs" label="Gruppe 20/40" />
                         <Link replace href="/plan/401">
                             <NavLink
@@ -117,19 +102,43 @@ export default function Shell({ children }: { children: ReactNode }) {
                                 icon={<IconTable />}
                             />
                         </Link>
-
-
-
+                        <section className="opacity-50">
+                            <Divider my="xs" label="alte Stundenpläne" />
+                            <Link replace href="/plan/40">
+                                <NavLink
+                                    onClick={() => setNavOpened((o) => !o)}
+                                    label="Gruppe 40"
+                                    icon={<IconTable />}
+                                />
+                            </Link>
+                            <Link replace href="/plan/41">
+                                <NavLink
+                                    onClick={() => setNavOpened((o) => !o)}
+                                    label="Gruppe 41"
+                                    icon={<IconTable />}
+                                />
+                            </Link>
+                            <Link replace href="/plan/42">
+                                <NavLink
+                                    onClick={() => setNavOpened((o) => !o)}
+                                    label="Gruppe 42"
+                                    icon={<IconTable />}
+                                />
+                            </Link>
+                        </section>
+                    </Navbar.Section>
+                    <Navbar.Section>
                         <Divider my="xs" label="Info" />
-                        <Link href="https://www.studentenwerk-oberfranken.de/essen/speiseplaene/hof.html" target="_blank">
+                        <Link
+                            href="https://www.studentenwerk-oberfranken.de/essen/speiseplaene/hof.html"
+                            target="_blank"
+                        >
                             <NavLink
                                 onClick={() => setNavOpened((o) => !o)}
                                 label="Speiseplan"
                                 icon={<IconToolsKitchen2 />}
                             />
                         </Link>
-                    </Navbar.Section>
-                    <Navbar.Section>
                         <InfoModal />
                     </Navbar.Section>
                 </Navbar>

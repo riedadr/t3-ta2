@@ -3,7 +3,7 @@ import { type TweekDay, type Tstunde } from "~/types/db";
 import { Timeline, Text, Tabs, Loader } from "@mantine/core";
 import { api } from "~/utils/api";
 import Link from "next/link";
-import { IconWindowMaximize } from "@tabler/icons-react";
+import { IconLink } from "@tabler/icons-react";
 
 export function TimelineTabs({
     group,
@@ -216,7 +216,7 @@ export function TimelineTabs({
                                                                 }
                                                                 target="_blank"
                                                             >
-                                                                <IconWindowMaximize />
+                                                                <IconLink />
                                                             </Link>
                                                         )}
                                                     </div>
