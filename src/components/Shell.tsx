@@ -46,7 +46,7 @@ export default function Shell({ children }: { children: ReactNode }) {
                     width={{ sm: 200, lg: 300 }}
                 >
                     <Navbar.Section>
-                        <Link replace href="/">
+                        <Link replace href="/timeline">
                             <NavLink
                                 onClick={() => setNavOpened((o) => !o)}
                                 label="Timeline"
