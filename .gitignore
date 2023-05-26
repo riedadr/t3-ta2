@@ -47,7 +47,8 @@ yarn-error.log*
 # sql
 sql
 
-# sw
+# pwa
 public/sw.*
+public/workbox-*.js
 
 package-lock.old.json
