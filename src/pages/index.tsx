@@ -1,5 +1,5 @@
 import { Text, Timeline } from "@mantine/core";
-import { IconCheck, IconListNumbers } from "@tabler/icons-react";
+import { IconCheck, IconListNumbers, IconUsers } from "@tabler/icons-react";
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
@@ -126,7 +126,7 @@ const Home: NextPage = () => {
                                         target="_blank"
                                         title="Platznummern"
                                     >
-                                        <IconListNumbers />
+                                        <IconUsers />
                                     </Link>
                                 </div>
                                 <Text color="dimmed" size="sm">
